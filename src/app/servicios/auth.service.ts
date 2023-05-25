@@ -12,27 +12,25 @@ export class AuthService {
   constructor() {
   }
 
-  login(username, userlastname, role, img) {
 
+  login(id,username, userlastname, role, img) {
 
     /***Apartado LocalStorage***/
+    localStorage.setItem('id', id)
     localStorage.setItem('username', username);
     localStorage.setItem('userlastname', userlastname);
     localStorage.setItem('role', role);
     localStorage.setItem('img', img);
   }
 
+
   isLoggedIn(): boolean {
-    if (localStorage.getItem('token') != null) {
-      return true;
-    } else {
-      return false;
-    }
+    return localStorage.getItem('token') != null;
   }
 
   logout(): void {
     this.isLogin = false;
-
+    localStorage.removeItem('id');
     localStorage.removeItem('token');
     localStorage.removeItem('img');
     localStorage.removeItem('username');
@@ -49,7 +47,7 @@ export class AuthService {
       return true;
     }
     return false;
-  }
+  }E
 
 
 }

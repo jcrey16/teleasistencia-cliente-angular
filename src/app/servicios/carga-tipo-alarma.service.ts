@@ -12,6 +12,7 @@ import {environment} from "../../environments/environment";
 export class CargaTipoAlarmaService {
   private urlBase = environment.urlBase;
   private URL_SERVER_TIPOS_ALARMAS = this.urlBase + 'tipo_alarma';
+  private URL_SERVER_CLASIFICACION_ALARMAS='?id_clasificacion_alarma';
 
   constructor(private http: HttpClient) {
   }
@@ -24,17 +25,18 @@ export class CargaTipoAlarmaService {
     return this.http.get<ITipoAlarma>(this.URL_SERVER_TIPOS_ALARMAS + '/' + idTipoAlarma);
   }
 
-  modificarTipoAlarma(tipoAlarma: ITipoAlarma): Observable<ITipoAlarma> {
-    return this.http.put<ITipoAlarma>(this.URL_SERVER_TIPOS_ALARMAS + '/' + tipoAlarma.id, tipoAlarma);
+  getTipoAlarmaPorClasificacion(idTipoAlarma:number):Observable<ITipoAlarma[]>{
+    return this.http.get<ITipoAlarma[]>(this.URL_SERVER_TIPOS_ALARMAS+this.URL_SERVER_CLASIFICACION_ALARMAS + '=' + idTipoAlarma);
+  }
+
+  modificarTipoAlarma(tipoAlarma: ITipoAlarma,id: number): Observable<ITipoAlarma> {
+    return this.http.put<ITipoAlarma>(this.URL_SERVER_TIPOS_ALARMAS + '/' + id, tipoAlarma);
   }
 
   nuevoTipoAlarma(tipoAlarma: ITipoAlarma): Observable<ITipoAlarma> {
     return this.http.post<ITipoAlarma>(this.URL_SERVER_TIPOS_ALARMAS, tipoAlarma);
   }
-  eliminarTipoAlarma(tipoAlarma:ITipoAlarma): Observable<IUsers> {
-    console.log("servicio");
-    console.log(tipoAlarma);
-    console.log(tipoAlarma.id);
-    return this.http.delete<IUsers>(this.URL_SERVER_TIPOS_ALARMAS + '/' + tipoAlarma.id);
+  eliminarTipoAlarma(tipoAlarma: ITipoAlarma): Observable<ITipoAlarma> {
+    return this.http.delete<ITipoAlarma>(this.URL_SERVER_TIPOS_ALARMAS + '/' + tipoAlarma);
   }
 }
